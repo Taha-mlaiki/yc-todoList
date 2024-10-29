@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body class="bg-gray-100">  
+      <div class="flex container items-center justify-between mt-16">
+          <button class="btn-primary">
+            Add Task 
+            <span class="font-bold ">+</span>
+          </button>
+          <div class="max-w-sm w-full relative">
+            <input type="text" class="w-full rounded-md py-3 px-3 border-2 focus:outline-none focus:border-2" placeholder="Search...">
+            <img src="../assets/search-icon.png" alt="search icon" class="w-5 absolute right-4  top-4">
+          </div>
+          <button class="btn-primary flex items-center gap-x-2">
+            Add Multiple 
+            <span class="font-bold ">+</span>
+          </button>
+      </div>
+      <div>
+         <div class="model h-screen bg-black/40 absolute w-screen top-0 left-0 flex">
+          
+         </div>
+        <div class="container grid grid-cols-3 mt-14 gap-x-14">
+            <div class="flex flex-column gap-y-4">
+              <div class="px-3 py-5 border-b-2 border-b-red-500 w-full">
+                 <h1 class="font-bold text-xl text-neutral-700">To Do  <span class="text-neutral-500 ms-3 font-normal text-xl">| 3</span></h1>
+              </div>
+              <div>
+
+              </div>
+            </div>
+            <div class="flex flex-column gap-y-4">
+              <div class="px-3 py-5 border-b-2 border-b-yellow-500 w-full">
+                <h1 class="font-bold text-xl text-neutral-700">In Progress  <span class="text-neutral-500 ms-3 font-normal text-xl">| 1</span></h1>
+             </div>
+            </div>
+            <div class="flex flex-column gap-y-4">
+              <div class="px-3 py-5 border-b-2 border-b-green-500 w-full">
+                <h1 class="font-bold text-xl text-neutral-700">Done  <span class="text-neutral-500 ms-3 font-normal text-xl">| 3</span></h1>
+             </div>
+            </div>
+        </div>
+      </div>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
