@@ -1,102 +1,138 @@
-// Selectors
-const addTaskModal = document.getElementById("addTaskModal");
-const taskForm = document.getElementById("taskForm");
-const tasksContainer = document.getElementById("tasks");
+let model = document.querySelector(".model");
 
-// Functions to open and close the modal
-function openModal() {
-  addTaskModal.classList.remove("hidden");
-}
-function closeModal() {
-  addTaskModal.classList.add("hidden");
-}
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// Task array to store tasks
-let tasks = [];
+const openModel = () => {
+  model.classList.remove("hidden");
+  model.classList.add("flex");
+};
 
-// Add Task Function
-taskForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+const closeModel = () => {
+  model.classList.add("hidden"), model.classList.remove("flex");
+};
 
-  // Get form values
-  const title = document.getElementById("taskTitle").value;
-  const description = document.getElementById("taskDescription").value;
-  const dueDate = document.getElementById("taskDueDate").value;
-  const priority = document.getElementById("taskPriority").value;
+const createTask = () => {
+  // Collect values from the form
+  const title = document.querySelector('input[name="title"]').value;
+  const description = document.querySelector('textarea[name="title"]').value;
+  const status = document.querySelector('select[name="status"]').value;
+  const priority = document.querySelector('select[name="priority"]').value;
+  const endDate = document.querySelector('input[name="end_date"]').value;
 
-  // Create task object
+  // Validate input fields
+  if (!title || !description || !status || !priority || !endDate) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  // Create a task object
   const task = {
-    id: Date.now(),
+    id: tasks.length,
     title,
     description,
-    dueDate,
+    status,
     priority,
-    status: "To Do"
+    endDate,
   };
 
-  // Add task to tasks array
+  // log the task that has been created
+  console.log("Task created:", task);
   tasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
-  // Reset form and close modal
-  taskForm.reset();
-  closeModal();
+  // Reset the form
+  document.querySelector('input[name="title"]').value = "";
+  document.querySelector('textarea[name="title"]').value = "";
+  document.querySelector('select[name="status"]').value = "todo";
+  document.querySelector('select[name="priority"]').value = "P0";
+  document.querySelector('input[name="end_date"]').value = "";
 
-  // Render tasks
-  renderTasks();
-});
+  // Hide the modal
+  document.querySelector(".model").classList.add("hidden");
+  showTasks();
+};
 
-// Render Tasks Function
-function renderTasks() {
-  tasksContainer.innerHTML = "";
-
-  tasks.forEach((task) => {
-    const taskItem = document.createElement("li");
-    taskItem.className = `flex justify-between items-center p-4 rounded shadow ${getPriorityColor(
-      task.priority
-    )}`;
-    
-    taskItem.innerHTML = `
-      <div>
-        <h3 class="font-semibold">${task.title}</h3>
-        <p class="text-sm">${task.dueDate}</p>
-        <p class="text-sm">${task.description}</p>
-      </div>
-      <div class="space-x-2">
-        <button onclick="changeStatus(${task.id})" class="bg-blue-500 text-white px-2 py-1 rounded">${task.status}</button>
-        <button onclick="deleteTask(${task.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-      </div>
-    `;
-    tasksContainer.appendChild(taskItem);
-  });
-}
-
-// Get Priority Color
-function getPriorityColor(priority) {
-  switch (priority) {
+const appendTask = (task) => {
+  // Define border color based on priority
+  let borderColor = "";
+  switch (task.priority) {
+    case "P0":
+      borderColor = "border-l-red-700";
+      break;
     case "P1":
-      return "bg-red-100 text-red-700";
+      borderColor = "border-l-red-400";
+      break;
     case "P2":
-      return "bg-orange-100 text-orange-700";
-    case "P3":
-      return "bg-green-100 text-green-700";
+      borderColor = "border-l-yellow-500";
+      break;
     default:
-      return "";
+      borderColor = "border-l-red-700";
   }
-}
 
-// Change Task Status
-function changeStatus(id) {
-  tasks = tasks.map((task) => {
-    if (task.id === id) {
-      task.status = task.status === "To Do" ? "Done" : "To Do";
+  // Return task HTML with dynamic left border color
+  return `
+    <div class="w-full rounded-md border-l-4 cursor-pointer ${borderColor} p-4 mb-4 shadow-sm">
+      <h2 class="font-bold">${task.title}</h2>
+      <div class="flex justify-between items-center">
+      <p class="font-bold mt-2"> ${task.priority}</p>
+      <p class="text-sm">${task.endDate}</p>
+      </div>
+      <div class="flex justify-end items-center gap-x-2"> 
+        <button onclick="deleteTask(${task.id})" class="text-red-500 mt-2">Delete</button>
+        <button onclick="editTask(${task.id})" class="text-blue-500 mt-2">Edit</button>
+      </div>
+    </div>
+  `;
+};
+
+
+const showTasks = () => {
+  // Select columns and count elements
+  const todoTasksDiv = document.querySelector(".todoTasks");
+  const doingTasksDiv = document.querySelector(".doingTasks");
+  const doneTasksDiv = document.querySelector(".doneTasks");
+
+  const todoCountDiv = document.getElementById("todoCount");
+  const doingCountDiv = document.getElementById("doingCount");
+  const doneCountDiv = document.getElementById("doneCount");
+
+  let todoTasks = [];
+  let doingTasks = [];
+  let doneTasks = [];
+
+  for(let i = 0;i<tasks.length ;i++){
+    if(tasks[i].status == "todo"){
+      todoTasks.push(tasks[i])
+    }else if (tasks[i].status == "doing"){
+      doingTasks.push(tasks[i])
+    }else if (tasks[i].status == "done"){
+      doneTasks.push(tasks[i])
     }
-    return task;
-  });
-  renderTasks();
-}
+  }
 
-// Delete Task
-function deleteTask(id) {
-  tasks = tasks.filter((task) => task.id !== id);
-  renderTasks();
-}
+
+
+
+  // Reset counters
+  let todoCounter = todoTasks.length;
+  let doingCounter = doingTasks.length;
+  let doneCounter = doneTasks.length;
+
+  
+
+  // Update counts
+  todoCountDiv.textContent = `| ${todoCounter}`;
+  doingCountDiv.textContent = `| ${doingCounter}`;
+  doneCountDiv.textContent = `| ${doneCounter}`;
+
+  todoTasksDiv.innerHTML = ""
+  doingTasksDiv.innerHTML = ""
+  doneTasksDiv.innerHTML = ""
+
+  todoTasks.forEach((task)=> todoTasksDiv.innerHTML += appendTask(task))
+  doingTasks.forEach((task)=> doingTasksDiv.innerHTML += appendTask(task))
+  doneTasks.forEach((task)=> doneTasksDiv.innerHTML += appendTask(task))
+};
+
+// Call showTasks on page load to display stored tasks
+showTasks();
