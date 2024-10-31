@@ -95,12 +95,10 @@ const appendTask = (task) => {
 const deleteTask = (id)=>{
   tasks = tasks.filter((task)=> task.id !== id)
   const notification = document.querySelector(".notification");
-  notification.classList.remove("-right-64")
-  notification.classList.add("right-5")
+  notification.classList.remove("translate-x-72")
   setTimeout(() => {
-    notification.classList.remove("right-5")
-    notification.classList.add("-right-64")
-  }, 2500);
+    notification.classList.add("translate-x-72")
+  }, 2000);
   localStorage.setItem("tasks",JSON.stringify(tasks))
   showTasks();
 }
