@@ -55,27 +55,34 @@ const createTask = () => {
 const appendTask = (task) => {
   // Define border color based on priority
   let borderColor = "";
+  let textColor = ""
   switch (task.priority) {
     case "P0":
       borderColor = "border-l-red-700";
+      textColor = "text-red-700";
       break;
     case "P1":
       borderColor = "border-l-red-400";
+      textColor = "text-red-400";
       break;
     case "P2":
       borderColor = "border-l-yellow-500";
+      textColor = "text-yellow-500";
+
       break;
     default:
       borderColor = "border-l-red-700";
+      textColor = "text-red-700";
+
   }
 
   // Return task HTML with dynamic left border color
   return `
-    <div class="w-full rounded-md border-l-4 cursor-pointer ${borderColor} p-4 mb-4 shadow-sm">
-      <h2 class="font-bold">${task.title}</h2>
+    <div class="w-full rounded-md border-l-4 cursor-pointer ${borderColor} p-4 mb-4 shadow-md">
+      <h2 class="font-bold text-neutral-700">${task.title}</h2>
       <div class="flex justify-between items-center">
-      <p class="font-bold mt-2"> ${task.priority}</p>
-      <p class="text-sm">${task.endDate}</p>
+      <p class="font-bold mt-2 ${textColor}"> ${task.priority}</p>
+      <p class="text-sm text-neutral-400">${task.endDate}</p>
       </div>
       <div class="flex justify-end items-center gap-x-2"> 
         <button onclick="deleteTask(${task.id})" class="text-red-500 mt-2">Delete</button>
@@ -84,6 +91,19 @@ const appendTask = (task) => {
     </div>
   `;
 };
+
+const deleteTask = (id)=>{
+  tasks = tasks.filter((task)=> task.id !== id)
+  const notification = document.querySelector(".notification");
+  notification.classList.remove("-right-64")
+  notification.classList.add("right-5")
+  setTimeout(() => {
+    notification.classList.remove("right-5")
+    notification.classList.add("-right-64")
+  }, 2500);
+  localStorage.setItem("tasks",JSON.stringify(tasks))
+  showTasks();
+}
 
 
 const showTasks = () => {
