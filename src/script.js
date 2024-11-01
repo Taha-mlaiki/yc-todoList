@@ -2,6 +2,16 @@ let model = document.querySelector(".model");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+let title = document.querySelector('input[name="title"]');
+let description = document.querySelector('textarea[name="title"]');
+let status = document.querySelector('select[name="status"]');
+let priority = document.querySelector('select[name="priority"]');
+let endDate = document.querySelector('input[name="end_date"]');
+
+let notification = document.querySelector(".notification");
+let notificationMessage = document.querySelector(".notification p")
+
+
 const openModel = () => {
   model.classList.remove("hidden");
   model.classList.add("flex");
@@ -11,41 +21,40 @@ const closeModel = () => {
   model.classList.add("hidden"), model.classList.remove("flex");
 };
 
+const resetForm = ()=>{
+  title.value = "";
+  description.value = "";
+  status.value = "todo";
+  priority.value = "P0";
+  endDate.value = ""
+}
+
 const createTask = () => {
   // Collect values from the form
-  const title = document.querySelector('input[name="title"]').value;
-  const description = document.querySelector('textarea[name="title"]').value;
-  const status = document.querySelector('select[name="status"]').value;
-  const priority = document.querySelector('select[name="priority"]').value;
-  const endDate = document.querySelector('input[name="end_date"]').value;
+  
 
   // Validate input fields
-  if (!title || !description || !status || !priority || !endDate) {
+  if (!title.value || !description.value || !status.value || !priority.value || !endDate.value) {
     alert("Please fill in all fields.");
     return;
   }
 
   // Create a task object
   const task = {
-    id: tasks.length,
-    title,
-    description,
-    status,
-    priority,
-    endDate,
+    id: Date.now(),
+    title : title.value,
+    description :description.value,
+    status : status.value,
+    priority : priority.value,
+    endDate : endDate.value,
   };
 
   // log the task that has been created
-  console.log("Task created:", task);
   tasks.push(task);
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   // Reset the form
-  document.querySelector('input[name="title"]').value = "";
-  document.querySelector('textarea[name="title"]').value = "";
-  document.querySelector('select[name="status"]').value = "todo";
-  document.querySelector('select[name="priority"]').value = "P0";
-  document.querySelector('input[name="end_date"]').value = "";
+  resetForm();
 
   // Hide the modal
   document.querySelector(".model").classList.add("hidden");
@@ -86,7 +95,7 @@ const appendTask = (task) => {
       </div>
       <div class="flex justify-end items-center gap-x-2"> 
         <button onclick="deleteTask(${task.id})" class="text-red-500 mt-2">Delete</button>
-        <button onclick="editTask(${task.id})" class="text-blue-500 mt-2">Edit</button>
+        <button onclick="updateTask(${task.id})" class="text-blue-500 mt-2">Edit</button>
       </div>
     </div>
   `;
@@ -94,15 +103,45 @@ const appendTask = (task) => {
 
 const deleteTask = (id)=>{
   tasks = tasks.filter((task)=> task.id !== id)
-  const notification = document.querySelector(".notification");
-  notification.classList.remove("translate-x-72")
-  setTimeout(() => {
-    notification.classList.add("translate-x-72")
-  }, 2000);
+  toast("Card Deleted !")
   localStorage.setItem("tasks",JSON.stringify(tasks))
   showTasks();
 }
 
+const toast = (message)=>{
+  notificationMessage.textContent = message
+  notification.classList.remove("translate-x-72")
+  setTimeout(() => {
+    notification.classList.add("translate-x-72")
+  notificationMessage.textContent = ""
+  }, 2000);
+}
+
+const updateTask = (id)=>{
+  let submit_task = document.querySelector(".submit_task");
+  openModel();
+
+  submit_task.textContent = "Edit"
+  if(id){
+    const findedTask = tasks.find((task)=> task.id == id)
+    title.value = findedTask.title
+    description.value = findedTask.description
+    status.value = findedTask.status
+    priority.value = findedTask.priority
+    endDate.value = findedTask.endDate
+    submit_task.onclick = ()=>{
+      findedTask.title = title.value
+      findedTask.description = description.value
+      findedTask.status = status.value
+      findedTask.priority = priority.value
+      findedTask.endDate = endDate.value
+      localStorage.setItem("tasks",JSON.stringify(tasks))
+      toast("Card updated successfully !");
+      showTasks();
+      closeModel();
+    }
+  }
+}
 
 const showTasks = () => {
   // Select columns and count elements
