@@ -8,18 +8,31 @@
   </head>
   <body class="bg-gray-100 p-0 overflow-x-hidden">
     <div
-      class="w-64 notification h-10 flex items-center justify-between duration-300 px-3 top-5 fixed transition right-5 translate-x-72 bg-white rounded-md border-l-4 border-green-600"
+      class="w-64 notification z-50 h-10 flex items-center justify-between duration-300 px-3 top-5 fixed transition right-5 translate-x-72 bg-white rounded-md border-l-4 border-green-600"
     >
       <p class="text-sm text-neutral-800 font-bold">
         Card deleted Successfully
       </p>
       <img src="../assets/accept.png" alt="" class="w-4" />
     </div>
-    <div class="flex container items-center justify-between mt-16">
-      <button onclick="openModel()" class="btn-primary">
-        Add Task
-        <span class="font-bold">+</span>
-      </button>
+    <div class="flex container justify-between mt-16">
+      <div class="flex items-center gap-3">
+        <button onclick="createUpdateTask('create')" class="btn-primary">
+          Add Task
+          <span class="font-bold">+</span>
+        </button>
+        <select onchange="filterP(this.value)" name="filterP" class="p-2">
+          <option value="P0">P0</option>
+          <option value="P1">P1</option>
+          <option value="P2">P2</option>
+        </select>
+        <button
+          onclick="clearFilter()"
+          class="px-2 py-1 bg-red-600 text-white font-bold text-xl"
+        >
+          X
+        </button>
+      </div>
       <div class="max-w-sm w-full relative">
         <input
           type="text"
@@ -32,16 +45,12 @@
           class="w-5 absolute right-4 top-4"
         />
       </div>
-      <button class="btn-primary flex items-center gap-x-2">
-        Add Multiple
-        <span class="font-bold">+</span>
-      </button>
     </div>
     <div>
       <div
-        class="model min-h-screen bg-black/40 absolute p-20 max-w-screen w-full top-0 left-0 hidden items-center justify-center"
+        class="model h-full bg-black/40 fixed p-20 w-full top-0 left-0 hidden items-center justify-center"
       >
-        <div class="max-w-2xl rounded-md z-10 bg-white w-full h-full p-4">
+        <div class="max-w-2xl rounded-md z-10 bg-white w-full p-4">
           <div class="flex items-center mb-10">
             <h1 class="font-bold text-2xl text-center">Create a Task</h1>
             <div
@@ -64,7 +73,7 @@
             <label for="title" class="label mb-30">Description</label>
             <textarea
               placeholder="Enter task description"
-              name="title"
+              name="description"
               class="input min-h-32"
             ></textarea>
           </div>
@@ -134,14 +143,17 @@
               />
             </div>
           </div>
-          <button onclick="createTask()" class="btn-primary w-full submit_task">
-            Create
-          </button>
+          <button class="btn-primary w-full submit_task hidden">Create</button>
+          <button class="btn-primary w-full update_task hidden">Update</button>
         </div>
       </div>
-      <div class="container grid grid-cols-3 mt-14 gap-x-14">
-        <div>
-          <div class="px-3 py-5 border-b-2 border-b-red-500 w-full">
+      <div
+        class="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-14 gap-x-14"
+      >
+        <div class="col-span-1">
+          <div
+            class="flex items-start justify-between py-5 border-b-2 border-b-red-500 w-full"
+          >
             <h1 class="font-bold text-xl text-neutral-700">
               To Do
               <span
@@ -150,22 +162,15 @@
                 >| 3</span
               >
             </h1>
-            <!-- <select>
-              <optgroup label=" ">
-                <option>Option 1.1</option>
-                <option>Option 1.2</option>
-              </optgroup>
-              <optgroup label="Category 2">
-                <option>Option 2.1</option>
-                <option>Option 2.2</option>
-              </optgroup>
-            </select> -->
-                        
           </div>
-          <div class="todoTasks flex flex-col gap-y-4 mt-4"></div>
+          <div
+            class="todoTasks flex flex-col max-h-[500px] overflow-y-auto p-2 h-full gap-y-4 mt-4"
+          ></div>
         </div>
-        <div>
-          <div class="px-3 py-5 border-b-2 border-b-yellow-500 w-full">
+        <div class="col-span-1">
+          <div
+            class="flex items-start justify-between px-3 py-5 border-b-2 border-b-yellow-500 w-full"
+          >
             <h1 class="font-bold text-xl text-neutral-700">
               In Progress
               <span
@@ -175,9 +180,11 @@
               >
             </h1>
           </div>
-          <div class="doingTasks flex flex-col gap-y-4 mt-4"></div>
+          <div
+            class="doingTasks flex flex-col max-h-[500px] h-full overflow-y-auto p-2 gap-y-4 mt-4"
+          ></div>
         </div>
-        <div>
+        <div class="col-span-1">
           <div class="px-3 py-5 border-b-2 border-b-green-500 w-full">
             <h1 class="font-bold text-xl text-neutral-700">
               Done
@@ -188,7 +195,9 @@
               >
             </h1>
           </div>
-          <div class="doneTasks flex flex-col gap-y-4 mt-4"></div>
+          <div
+            class="doneTasks flex flex-col max-h-[500px] h-full overflow-y-auto p-2 gap-y-4 mt-4"
+          ></div>
         </div>
       </div>
     </div>
