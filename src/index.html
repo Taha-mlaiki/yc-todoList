@@ -60,91 +60,93 @@
               X
             </div>
           </div>
-          <div class="mb-4">
-            <label for="title" class="label mb-30">Title</label>
-            <input
-              type="text"
-              name="title"
-              class="input"
-              placeholder="Enter task title"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="title" class="label mb-30">Description</label>
-            <textarea
-              placeholder="Enter task description"
-              name="description"
-              class="input min-h-32"
-            ></textarea>
-          </div>
-          <div class="flex items-start flex-wrap gap-5">
-            <div class="w-full flex-shrink-0">
-              <div class="mb-4">
-                <label for="status" class="label">Status</label><br />
-                <select
-                  name="status"
-                  class="py-2.5 w-full border px-3 rounded-md focus:outline-none"
-                >
-                  <option
-                    selected
-                    value="todo"
-                    class="text-blue-500 py-2 bg-blue-200 font-bold"
-                  >
-                    Todo
-                  </option>
-                  <option
-                    value="doing"
-                    class="text-yellow-500 py-2 bg-yellow-100 font-bold"
-                  >
-                    Doing
-                  </option>
-                  <option
-                    value="done"
-                    class="text-purple-300 py-2 bg-purple-100 font-bold"
-                  >
-                    Done
-                  </option>
-                </select>
-              </div>
-              <div class="mb-4">
-                <label for="priority" class="label">Priority</label><br />
-                <select
-                  name="priority"
-                  class="py-2 w-full border px-3 rounded-md focus:outline-none"
-                >
-                  <option
-                    selected
-                    value="P0"
-                    class="text-red-700 py-2 bg-red-200 font-bold"
-                  >
-                    P0
-                  </option>
-                  <option
-                    value="P1"
-                    class="text-red-500 py-2 bg-red-100 font-bold"
-                  >
-                    P1
-                  </option>
-                  <option
-                    value="P2"
-                    class="text-yellow-300 py-2 bg-yellow-100 font-bold"
-                  >
-                    P2
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="mb-4 w-full flex-shrink-0">
-              <label for="end_date" class="label">End Date</label><br />
+          <form>
+            <div class="mb-4">
+              <label for="title" class="label mb-30">Title</label>
               <input
-                name="end_date"
-                type="date"
-                class="py-2 w-full border px-3 rounded-md focus:outline-none"
+                type="text"
+                name="title"
+                class="input"
+                placeholder="Enter task title"
               />
             </div>
-          </div>
-          <button class="btn-primary w-full submit_task hidden">Create</button>
-          <button class="btn-primary w-full update_task hidden">Update</button>
+            <div class="mb-4">
+              <label for="title" class="label mb-30">Description</label>
+              <textarea
+                placeholder="Enter task description"
+                name="description"
+                class="input min-h-32"
+              ></textarea>
+            </div>
+            <div class="flex items-start flex-wrap gap-5">
+              <div class="w-full flex-shrink-0">
+                <div class="mb-4">
+                  <label for="status" class="label">Status</label><br />
+                  <select
+                    name="status"
+                    class="py-2.5 w-full border px-3 rounded-md focus:outline-none"
+                  >
+                    <option
+                      selected
+                      value="todo"
+                      class="text-blue-500 py-2 bg-blue-200 font-bold"
+                    >
+                      Todo
+                    </option>
+                    <option
+                      value="doing"
+                      class="text-yellow-500 py-2 bg-yellow-100 font-bold"
+                    >
+                      Doing
+                    </option>
+                    <option
+                      value="done"
+                      class="text-purple-300 py-2 bg-purple-100 font-bold"
+                    >
+                      Done
+                    </option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label for="priority" class="label">Priority</label><br />
+                  <select
+                    name="priority"
+                    class="py-2 w-full border px-3 rounded-md focus:outline-none"
+                  >
+                    <option
+                      selected
+                      value="P0"
+                      class="text-red-700 py-2 bg-red-200 font-bold"
+                    >
+                      P0
+                    </option>
+                    <option
+                      value="P1"
+                      class="text-red-500 py-2 bg-red-100 font-bold"
+                    >
+                      P1
+                    </option>
+                    <option
+                      value="P2"
+                      class="text-yellow-300 py-2 bg-yellow-100 font-bold"
+                    >
+                      P2
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-4 w-full flex-shrink-0">
+                <label for="end_date" class="label">End Date</label><br />
+                <input
+                  name="end_date"
+                  type="date"
+                  class="py-2 w-full border px-3 rounded-md focus:outline-none"
+                />
+              </div>
+            </div>
+            <button class="btn-primary w-full submit_task hidden">Create</button>
+            <button class="btn-primary w-full update_task hidden">Update</button>
+          </form>
         </div>
       </div>
       <div
