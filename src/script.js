@@ -36,10 +36,10 @@ const createTask = () => {
   submit_task.classList.replace("hidden", "block");
 
   let title = document.querySelector('input[name="title"]');
-let description = document.querySelector('textarea[name="description"]');
-let status = document.querySelector('select[name="status"]');
-let priority = document.querySelector('select[name="priority"]');
-let endDate = document.querySelector('input[name="end_date"]');
+  let description = document.querySelector('textarea[name="description"]');
+  let status = document.querySelector('select[name="status"]');
+  let priority = document.querySelector('select[name="priority"]');
+  let endDate = document.querySelector('input[name="end_date"]');
 
   openModel();
   submit_task.onclick = () => {
@@ -65,6 +65,7 @@ let endDate = document.querySelector('input[name="end_date"]');
     console.log(task);
     tasks.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    toast("Card created successfully");
     closeModel();
     showTasks();
     resetForm();
@@ -86,10 +87,10 @@ const updateTask = (id) => {
   const findedTask = tasks.find((task) => task.id === id);
 
   let title = document.querySelector('input[name="title"]');
-let description = document.querySelector('textarea[name="description"]');
-let status = document.querySelector('select[name="status"]');
-let priority = document.querySelector('select[name="priority"]');
-let endDate = document.querySelector('input[name="end_date"]');
+  let description = document.querySelector('textarea[name="description"]');
+  let status = document.querySelector('select[name="status"]');
+  let priority = document.querySelector('select[name="priority"]');
+  let endDate = document.querySelector('input[name="end_date"]');
 
   if (!findedTask) return;
 
@@ -145,9 +146,9 @@ const showTasks = () => {
   let doingCounter = doingTasks.length;
   let doneCounter = doneTasks.length;
 
-  todoCountDiv.textContent = `| ${todoCounter == 0 ? "Empty": todoCounter}`;
-  doingCountDiv.textContent = `| ${doingCounter ==  0 ? "Empty": doingCounter}`;
-  doneCountDiv.textContent = `| ${doneCounter ==  0 ? "Empty": doneCounter}`;
+  todoCountDiv.textContent = `| ${todoCounter == 0 ? "Empty" : todoCounter}`;
+  doingCountDiv.textContent = `| ${doingCounter == 0 ? "Empty" : doingCounter}`;
+  doneCountDiv.textContent = `| ${doneCounter == 0 ? "Empty" : doneCounter}`;
 
   todoTasksDiv.innerHTML = "";
   doingTasksDiv.innerHTML = "";
@@ -157,8 +158,6 @@ const showTasks = () => {
   doingTasks.forEach((task) => (doingTasksDiv.innerHTML += appendTask(task)));
   doneTasks.forEach((task) => (doneTasksDiv.innerHTML += appendTask(task)));
 };
-
-
 
 const appendTask = (task) => {
   let borderColor = "";
